@@ -1,0 +1,116 @@
+\documentclass{article} 
+
+% the purpose of this particular document is to serve as a staging area potential blog posts, for the purpose of editing, revision, and review. 
+
+% packages 
+	\usepackage{amsmath, amsthm, mathtools}
+	\usepackage{mdframed}  
+	\usepackage{geometry, enumerate} 
+	\usepackage{parskip}
+
+% theorems and such 
+  	\newtheorem{theorem}{Theorem}[section]
+  	\newtheorem{corollary}{Corollary}[theorem]
+  	\newtheorem{lemma}[theorem]{Lemma} 
+  	\newtheorem*{remark}{Remark}
+  	\newtheorem*{exe}{Exercise} 
+  	
+% custom commands 
+	\newcommand{\ceil}[1]{\left \lceil #1 \right \rceil}
+	\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+	\newcommand{\X}[1]{\, \text{mod} \, #1}
+	\newcommand{\divv}{\,|\,}
+	\newcommand{\GCD}[2]{GCD\,(#1, #2)}
+	\newcommand{\LCM}[2]{LCM\,(#1, #2)}
+	
+\begin{document} 
+
+\title{Elementary Number Theory : \S0} 
+\author{Henry Slayer $|$ University of California, Santa Cruz} 
+\date{}
+\maketitle
+
+\section*{Introduction}
+Number Theory is the study of the integers, and their wondrous, infinite realms of complexity.
+
+Number Theory is also the study of rational numbers, too, which we can manipulate and explore as ratios of integers. For the most part, however, we'll be looking at whole numbers, and how these whole numbers interact with each other.
+
+Some of the results in Number Theory have a reputation for being “easy to state, hard to prove.”
+ 
+While I’ve found this to be true, I think that it's a bit short-selling. On the surface, yes, it is easy to assemble statements about arithmetic, but those simple statements often conceal beautiful, and deep relationships about the structure of numbers themselves. For what is a number? Prime, composite, solitary... these are terms that we attribute, classifications that we make, but the beauty of Number theory goes beyond this framework. Number Theory is the process of getting to know numbers as personalities, objects and beings unto themselves. Number theory breathes life into these simple objects, and gives us tools for exploring their many ways of interacting and playing with each other. In my opinion, there’s a real elegance to number theory that wears well. Working with the integers has brought me a certain simple and curious satisfaction. And by simple, I don’t mean lacking in complexity. Number theory affords as much complexity as one wants to give it. Analytic techniques from real and complex analysis have completely re-shaped the way that we look at the humble whole number. We can investigate entirely new number systems, such as the Gaussian and Eisenstein integers, which can be applied to the exploration of topics such as cubic reciprocity. And, the applications of Number Theory in the 'real world' have some teeth. Number theory has powerful, practical applications from data security to algorithm design to scientific computing. 
+Elementary Number theory is a rich subject, and many other branches of mathematics can be traced to its origin. Elementary number theory is responsible for the birth of the complex variable, the development of algebraic and analytic number theory, and some of the most powerful insights into the nature of numbers themselves. 
+\begin{mdframed} 
+Matters of mind aside, elementary number theory is a great place to fall in love with mathematics. I would say that my first number theory course inspired that little whisper in the back of my brain… \textit{I think that I could do this for a lifetime}. Even if number theory isn't your cup of tea, it does provide a solid foundation for further study in mathematics, especially for those who are new to writing proofs and thinking mathematically. My hope is that in whatever extent you engage with number theory, it can afford you one or both of these wonderful benefits. 
+\end{mdframed}
+These series of articles are based on an undergraduate number theory course that I took in the spring of 2019. I would say that my experience was made by a great professor and a great text, two influences that will be present (either explicitly or implicitly) in all of the writing that follows. I would like to thank Edmund Karasiewicz for his fantastic instruction in the course, and the wonderful guidance provided by Martin Weissman’s text \textit{An Illustrated Theory of Numbers}. If you are interested in learning more about this book, visit 
+\begin{verbatim} 
+http://illustratedtheoryofnumbers.com/
+\end{verbatim}
+My intention moving forward in this series is to present the fundamental ideas of Elementary number theory, using proofs inspired by Weissman’s methods, as well as the work of other mathematicians such as Erdos and Rosen. Any mistakes or errors are of my own doing. Above all else, my intention is to produce a readable and enjoyable journey through the theory of numbers, and to provide the reader with a solid foundation for further study. The prerequisites for understanding the material aren't much: high school math through pre-calculus, all the better if the reader has taken an introductory proofs course, or something similar. At any rate, if anything feels confusing, you're probably on the right track. 
+
+Take heart. You’re beginning on a mathematical journey that’s been unfolding since the time of the ancient Greeks, and even before then. Welcome to the theory of numbers. 
+
+\subsubsection*{Our Universe: Z, N, Q}
+For the majority of what’s to come, we’ll be working with whole numbers, or fractions of whole numbers. These include the integers $(\mathbf{Z})$, the natural numbers $(\mathbf{N})$, and the rational numbers on occasion $(\mathbf{Q})$. 
+\begin{mdframed} 
+\[\mathbf{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\} \qquad \mathbf{N} = \{0, 1, 2, 3, 4, \dots\} \qquad \mathbf{Q} = \{\frac{a}{b} : a, b \in \mathbf{Z}\} \]
+\end{mdframed} 
+The integers are the infinite set of whole numbers ranging from $-\infty$ to $\infty$. The natural numbers are the collection of nonnegative integers, and the rational numbers are fractions of integers. For now, though, we'll put rational numbers on the back burner and consider some of the basic principles of integers and natural numbers. 
+
+\subsubsection*{Basic Principles: Divisibility} 
+One of the first questions that we can ask about numbers is how they go into each other. Divisibility between two numbers always implies that there’s a third party.
+We say that an integer a divides b if there exists another integer \(x\) such that \(ax = b\). We can divide b into x chunks, where each chunk is the size of a. Another way to say this is that \(b\) is a multiple of \(a\). We denote divisibility by \(a\divv b\).
+\[\boxed{\,a \text{ divides } b\,} \quad \Leftrightarrow \quad \boxed{\,a \,|\, b\,} \quad \Leftrightarrow \quad \boxed{\,ax = b\,} \quad \Leftrightarrow \quad \boxed{\,b \text{ is a multiple of } a\,}\] 
+Divisibility comes with some implications and intuitions. 
+First of all, if \(a\) divides some other number \(b\), \(b\) can't be smaller than \(a\). So, \(a\divv b\) implies  \(a \leq b\). 
+Second, suppose that \(a\divv b\) and \(a\divv c\). And then, suppose that \(b\) and \(c\) sum to some other number, \(d\). 
+That is, \(a\divv b\), \(a\divv c\), and \(b+c = d\). Then, it naturally follows that \(a\divv d\). 
+
+%ask the reader to prove this as an exercise. perhaps on the site, the proof can be stored in a simple drop-down box.
+
+The principle above comes in handy in all sorts of ways. 
+
+%include an example in here% 
+
+\subsubsection*{Basic Principles: GCD and LCM} 
+
+We end this introduction with two definitions, which we will return to frequently. Divisibility encourages us to define two special numbers, both related to each other, and related to the integers that define them. 
+
+We define the \textbf{greatest common divisor} of two integers a and b to be another integer, g. g has some special properties that make it the greatest common divisor. First, \(g\divv a\) and \(g\divv b\). This is the common part of the definition. Secondly, if $a$ and $b$ have any other common divisor(s), say \(d\), then \(d\divv g\). That is to say, among all of the common divisors of \(a\) and \(b\), \(g\) is the greatest. 
+
+The \textbf{least common multiple} is the greatest common divisor’s kid brother. The least common multiple of two integers \(a\) and \(b\) is an integer \(l\). \(l\) has the property that both \(a\divv l\) and \(b\divv l\). That is, \(l\) is a common multiple of both \(a\) and \(b\). Furthermore, for any other common multiple of \(a\) and \(b\) (some other integer \(m\) such that both \(a\) and \(b\) divide \(m\)), \(l\) is a divisor of \(m\) \((i.e. \,\,l\divv m)\). So, among all of the common multiples of \(a\) and \(b\), \(l\) is the smallest. 
+
+\begin{mdframed}
+\textbf{Greatest Common Divisor:} \\
+Let $a$ and $b$ be integers. Then, the greatest common divisor, $\GCD{a}{b}$ is another integer $g$ such that 
+\begin{enumerate}[(i)]
+\item $g\divv a$ and $g\divv b$
+\item For any other integer $d$, where $d\divv a$ and $d\divv b$, then $d\divv g$. 
+\end{enumerate}
+\end{mdframed} 
+\begin{mdframed}
+\textbf{Least Common Multiple:} \\
+Let $a$ and $b$ be integers. Then, least common multiple, $\LCM{a}{b}$ is another integer $l$ such that 
+\begin{enumerate}[(i)]
+\item $a\divv l$ and $b\divv l$
+\item For any other integer $m$, where $a\divv m$ and $b\divv m$, then $l\divv m$. 
+\end{enumerate}
+\end{mdframed}
+
+%include a diagram and a problem or two 
+ 
+\begin{exe} Let a, b, c be positive integers. 
+Prove that 
+\[\GCD{a}{\GCD{b}{c}} = \GCD{\GCD{a}{b}}{c}\] 
+And then, state and prove a similar result for the LCM. \\\\
+(Hint: if $a|b$ and $b|a$, then $a=b$)\\(Source: [MW] p.44)  
+\end{exe} \medskip
+\begin{exe} Suppose that $a, b, q, r$ are integers, and $a=q(b) + r$. Let $g$ be a nonnegative integer. Prove that
+\[g = \GCD{a}{b} \quad\textit{ if }\quad g = \GCD{b}{r}\]
+(Source: [MW] p.31)
+\end{exe} \medskip
+\begin{exe} 
+Think about the set $S = \{z \,:\, z = 2x + 3y \quad x, y\in \mathbf{Z}\}$. What do elements of this set look like? If the set-builder notation is unfriendly, consult the \textbf{Back Matter}. 
+\end{exe} 
+
+\end{document}
